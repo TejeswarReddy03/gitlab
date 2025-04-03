@@ -63,8 +63,8 @@
         .bitb-header {
             display: flex;
             align-items: center;
-            background: #f1f1f1;
-            height: 40px;
+            background: #f3f3f3;
+            height: 38px;
             padding: 0 16px;
             user-select: none;
             cursor: grab;
@@ -85,6 +85,14 @@
             gap: 8px;
         }
 
+        .bitb-header-icon {
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         .bitb-header-actions {
             display: flex;
             gap: 12px;
@@ -97,69 +105,133 @@
             cursor: pointer;
         }
 
+        .url-bar {
+            display: flex;
+            align-items: center;
+            background: white;
+            height: 32px;
+            border-radius: 4px;
+            margin: 6px 0;
+            padding: 0 8px;
+            font-size: 13px;
+            color: #222;
+            border: 1px solid #e0e0e0;
+        }
+
+        .url-lock {
+            color: #1a7340;
+            margin-right: 6px;
+            font-size: 14px;
+        }
+
+        .bookmark-bar {
+            display: flex;
+            align-items: center;
+            background: #f3f3f3;
+            height: 28px;
+            padding: 0 8px;
+            font-size: 12px;
+            color: #555;
+            border-bottom: 1px solid #e0e0e0;
+            overflow: hidden;
+        }
+
+        .bookmark-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 0 6px;
+            height: 22px;
+            background: transparent;
+            color: #555;
+            border-radius: 3px;
+            margin-right: 8px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            max-width: 120px;
+        }
+
+        .bookmark-item:hover {
+            background: #e5e5e5;
+        }
+
         .bitb-content {
-            padding: 32px;
+            padding: 0;
+            background-color: #fafafa;
+            height: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
         }
 
         /* GitLab Specific Styles */
         .gitlab-container {
             width: 100%;
-            max-width: 400px;
-            margin: 0 auto;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .gitlab-logo {
             text-align: center;
-            margin-bottom: 32px;
+            margin-bottom: 24px;
         }
 
-        .gitlab-logo img {
-            width: 65px;
-            height: auto;
+        .gitlab-logo svg {
+            width: 56px;
+            height: 56px;
         }
 
         .gitlab-form-container {
             background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            border: 1px solid #e5e5e5;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
             padding: 32px;
+            width: 100%;
+            max-width: 368px;
         }
 
         .form-title {
-            font-size: 24px;
-            margin-bottom: 24px;
+            font-size: 20px;
+            margin-bottom: 16px;
             font-weight: 600;
-            text-align: center;
+            color: #333;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         .form-label {
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 13px;
+            color: #333;
         }
 
         .form-input {
             width: 100%;
-            padding: 10px;
-            border: 1px solid var(--input-border);
+            padding: 8px 12px;
+            border: 1px solid #dbdbdb;
             border-radius: 4px;
             font-size: 14px;
+            line-height: 1.5;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
         }
 
         .form-input:focus {
             outline: none;
-            border-color: var(--gitlab-purple);
-            box-shadow: 0 0 0 2px rgba(110, 73, 203, 0.2);
+            border-color: #6666c4;
+            box-shadow: 0 0 0 3px rgba(102, 102, 196, 0.15);
         }
 
         .remember-me {
             display: flex;
             align-items: center;
+            font-size: 13px;
             margin-bottom: 16px;
         }
 
@@ -169,29 +241,32 @@
 
         .sign-in-button {
             width: 100%;
-            padding: 10px;
-            background-color: var(--gitlab-purple);
+            padding: 8px 12px;
+            background-color: #1f75cb;
             color: white;
             border: none;
             border-radius: 4px;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 500;
             cursor: pointer;
             margin-bottom: 16px;
+            transition: background-color 0.15s ease-in-out;
         }
 
         .sign-in-button:hover {
-            background-color: #5a3dad;
+            background-color: #1068bf;
         }
 
         .alternative-actions {
             display: flex;
             justify-content: space-between;
-            font-size: 14px;
+            font-size: 13px;
+            margin-top: 16px;
+            color: #666;
         }
 
         .alternative-link {
-            color: var(--gitlab-purple);
+            color: #1f75cb;
             text-decoration: none;
         }
 
@@ -238,6 +313,8 @@
             cursor: pointer;
             font-size: 14px;
             gap: 8px;
+            background-color: white;
+            transition: background-color 0.15s ease-in-out;
         }
 
         .social-button:hover {
@@ -249,6 +326,51 @@
             height: 16px;
         }
 
+        .gitlab-footer {
+            margin-top: 30px;
+            font-size: 13px;
+            color: #666;
+            text-align: center;
+        }
+
+        .gitlab-footer a {
+            color: #1f75cb;
+            text-decoration: none;
+        }
+
+        .gitlab-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Loader */
+        .loader-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1100;
+            display: none;
+        }
+
+        .loader {
+            border: 3px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 3px solid #1f75cb;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         /* Dialog Box */
         .dialog {
             position: fixed;
@@ -256,10 +378,10 @@
             left: 50%;
             transform: translate(-50%, -50%);
             background: white;
-            padding: 25px;
+            padding: 24px;
             border-radius: 8px;
-            box-shadow: var(--box-shadow);
-            z-index: 1001;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1101;
             max-width: 400px;
             display: none;
         }
@@ -268,23 +390,26 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 15px;
+            margin-bottom: 16px;
         }
 
         .dialog-title {
             font-size: 18px;
             font-weight: 600;
+            color: #333;
         }
 
         .dialog-content {
-            margin-bottom: 20px;
+            margin-bottom: 24px;
             line-height: 1.5;
+            color: #555;
+            font-size: 14px;
         }
 
         .dialog-buttons {
             display: flex;
             justify-content: flex-end;
-            gap: 10px;
+            gap: 12px;
         }
 
         .dialog-button {
@@ -293,13 +418,49 @@
             font-weight: 500;
             cursor: pointer;
             border: none;
+            font-size: 14px;
+            transition: background-color 0.15s ease-in-out;
+        }
+
+        .cancel-button {
+            background-color: #f3f3f3;
+            color: #333;
+        }
+
+        .cancel-button:hover {
+            background-color: #e5e5e5;
+        }
+
+        .continue-button {
+            background-color: #1f75cb;
+            color: white;
+        }
+
+        .continue-button:hover {
+            background-color: #1068bf;
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 576px) {
+            .bitb-popup {
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                transform: none;
+                border-radius: 0;
+            }
+
+            .gitlab-form-container {
+                box-shadow: none;
+                padding: 24px 16px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="content-wrapper" onclick="showVerificationPopup()">
-        <h1>Simulated GitLab Homepage</h1>
-        <p>This is a simulated content area. Click anywhere to trigger the GitLab login popup.</p>
+        <h1>Click anywhere to see the simulated GitLab login popup</h1>
     </div>
 
     <!-- BITB Overlay -->
@@ -309,17 +470,43 @@
     <div id="bitb-popup" class="bitb-popup">
         <div class="bitb-header" id="bitb-header">
             <div class="bitb-header-text">
-                <span>🔒</span> gitlab.com
+                <span>GitLab Sign in</span>
             </div>
             <div class="bitb-header-actions">
-                <div class="bitb-action" style="background-color: #ffbd44;"></div>
-                <div class="bitb-action" style="background-color: #00ca4e;" onclick="closeBITB()"></div>
+                <div class="bitb-action" style="background-color: #ff5f57;"></div>
+                <div class="bitb-action" style="background-color: #febc2e;"></div>
+                <div class="bitb-action" style="background-color: #28c840;" onclick="closeBITB()"></div>
             </div>
         </div>
+        
+        <div class="url-bar">
+            <span class="url-lock">🔒</span>
+            <span>gitlab.com/users/sign_in</span>
+        </div>
+        
+        <div class="bookmark-bar">
+            <div class="bookmark-item">
+                <span>📊</span>
+                <span>Dashboard</span>
+            </div>
+            <div class="bookmark-item">
+                <span>📁</span>
+                <span>Projects</span>
+            </div>
+            <div class="bookmark-item">
+                <span>👥</span>
+                <span>Groups</span>
+            </div>
+            <div class="bookmark-item">
+                <span>🔍</span>
+                <span>Issues</span>
+            </div>
+        </div>
+        
         <div class="bitb-content">
             <div class="gitlab-container">
                 <div class="gitlab-logo">
-                    <svg width="65" height="65" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                    <svg width="56" height="56" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
                         <path d="M456.782 261.465L452.447 249.672L419.196 158.15C417.682 153.568 413.365 150.559 408.642 150.559C403.902 150.559 399.587 153.568 398.089 158.15L364.835 249.672H147.199L113.956 158.15C112.441 153.568 108.126 150.559 103.402 150.559C98.6615 150.559 94.3469 153.568 92.8493 158.15L59.5953 249.672L55.2457 261.465C48.6923 279.435 52.7668 299.749 65.8468 312.829L241.668 488.664C246.299 493.295 251.799 493.699 256.012 493.699C260.226 493.699 265.728 493.298 270.359 488.664L446.177 312.829C459.241 299.749 463.335 279.435 456.782 261.465Z" fill="#E24329"/>
                         <path d="M456.782 261.465L452.447 249.672H364.835L408.642 150.559C413.365 150.559 417.682 153.568 419.196 158.15L452.447 249.672L456.782 261.465C463.335 279.435 459.241 299.749 446.177 312.829L270.359 488.664C265.728 493.298 260.226 493.699 256.012 493.699V493.699L446.177 312.829C459.241 299.749 463.335 279.435 456.782 261.465Z" fill="#FC6D26"/>
                         <path d="M270.359 488.664L256.012 493.699V493.699L241.668 488.664L65.8469 312.829C52.7669 299.749 48.6925 279.435 55.2458 261.465L59.5954 249.672H147.199L113.956 158.15C108.126 153.568 103.402 150.559 103.402 150.559L186.136 312.829L270.359 488.664Z" fill="#FCA326"/>
@@ -331,20 +518,20 @@
                 </div>
                 <div class="gitlab-form-container">
                     <h2 class="form-title">Sign in</h2>
-                    <form>
+                    <form id="login-form">
                         <div class="form-group">
                             <label for="username" class="form-label">Username or email</label>
-                            <input type="text" id="username" class="form-input" autocomplete="off">
+                            <input type="text" id="username" class="form-input" autocomplete="off" required>
                         </div>
                         <div class="form-group">
                             <label for="password" class="form-label">Password</label>
-                            <input type="password" id="password" class="form-input" autocomplete="off">
+                            <input type="password" id="password" class="form-input" autocomplete="off" required>
                         </div>
                         <div class="remember-me">
-                            <input type="checkbox" id="remember-me">
+                            <input type="checkbox" id="remember-me" checked>
                             <label for="remember-me">Remember me</label>
                         </div>
-                        <button class="sign-in-button" onclick="simulateLogin(event)">Sign in</button>
+                        <button type="submit" class="sign-in-button">Sign in</button>
                         <div class="alternative-actions">
                             <a href="#" class="alternative-link">Forgot your password?</a>
                             <a href="#" class="alternative-link">Register now</a>
@@ -375,8 +562,16 @@
                         <span>Sign in with GitHub</span>
                     </button>
                 </div>
+                <div class="gitlab-footer">
+                    By signing in you accept the <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>
+                </div>
             </div>
         </div>
+    </div>
+
+    <!-- Loading Indicator -->
+    <div id="loader-container" class="loader-container">
+        <div class="loader"></div>
     </div>
 
     <!-- Dialog Box -->
@@ -386,12 +581,12 @@
             <h3 class="dialog-title">Sign-in Successful</h3>
         </div>
         <div class="dialog-content">
-            <p>You have successfully signed in to your GitLab account.</p>
-            <p style="margin-top: 10px;">Redirecting you to your projects dashboard...</p>
+            <p>Welcome back! You have successfully signed in to your GitLab account.</p>
+            <p style="margin-top: 10px;">You will be redirected to your projects dashboard momentarily.</p>
         </div>
         <div class="dialog-buttons">
-            <button class="dialog-button" style="background-color: #eeeeee;" onclick="closeDialog()">Cancel</button>
-            <button class="dialog-button" style="background-color: var(--gitlab-purple); color: white;" onclick="continueToWebsite()">Continue</button>
+            <button class="dialog-button cancel-button" onclick="closeDialog()">Cancel</button>
+            <button class="dialog-button continue-button" onclick="continueToWebsite()">Continue</button>
         </div>
     </div>
 
@@ -427,33 +622,8 @@
         // Continue to website
         function continueToWebsite() {
             document.getElementById('security-dialog').style.display = 'none';
-        }
-
-        // Simulate login
-        function simulateLogin(event) {
-            if (event) {
-                event.preventDefault();
-            }
-            
-            // Get the values (for demonstration - in a real attack, these would be sent to the attacker)
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            
-            console.log("Captured credentials (demo only):", {username, password});
-            
-            // Display a brief "signing in" message
-            const button = document.querySelector('.sign-in-button');
-            const originalText = button.textContent;
-            button.textContent = 'Signing in...';
-            button.disabled = true;
-            
-            // After a short delay, close the BITB popup and show the success dialog
-            setTimeout(() => {
-                closeBITB();
-                showSecurityDialog();
-                button.textContent = originalText;
-                button.disabled = false;
-            }, 1500);
+            // In a real attack, this might redirect to the actual GitLab site
+            // or perform another action
         }
 
         // Make the popup draggable
@@ -466,19 +636,21 @@
                 offsetY = e.clientY - popup.getBoundingClientRect().top;
                 popup.style.transition = 'none';
                 
-                // Remove transform to allow proper positioning
-                popup.style.transform = 'none';
-                
-                // Update initial position
-                popup.style.left = `${popup.getBoundingClientRect().left}px`;
-                popup.style.top = `${popup.getBoundingClientRect().top}px`;
+                // Remove transform for proper positioning
+                if (window.innerWidth > 576) {
+                    popup.style.transform = 'none';
+                    
+                    // Update initial position
+                    popup.style.left = `${popup.getBoundingClientRect().left}px`;
+                    popup.style.top = `${popup.getBoundingClientRect().top}px`;
+                }
                 
                 document.onmousemove = drag;
                 document.onmouseup = stopDrag;
             };
 
             function drag(e) {
-                if (!isDragging) return;
+                if (!isDragging || window.innerWidth <= 576) return;
                 popup.style.left = `${e.clientX - offsetX}px`;
                 popup.style.top = `${e.clientY - offsetY}px`;
             }
@@ -489,6 +661,43 @@
                 document.onmouseup = null;
             }
         }
+
+        // Set up form submission
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // Get the values (for demonstration - in a real attack, these would be sent to the attacker)
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            console.log("Captured credentials (demo only):", {username, password});
+            
+            // Show loading indicator
+            document.getElementById('loader-container').style.display = 'flex';
+            
+            // After a short delay, close the BITB popup and show the success dialog
+            setTimeout(() => {
+                document.getElementById('loader-container').style.display = 'none';
+                closeBITB();
+                showSecurityDialog();
+            }, 1500);
+        });
+
+        // Random background animation to make it more realistic
+        function setRandomBackground() {
+            const backgrounds = [
+                'linear-gradient(45deg, #f3f3f3 25%, transparent 25%, transparent 75%, #f3f3f3 75%, #f3f3f3), linear-gradient(45deg, #f3f3f3 25%, transparent 25%, transparent 75%, #f3f3f3 75%, #f3f3f3)',
+                'linear-gradient(to right, #f9f9f9, #f0f0f0)',
+                'radial-gradient(#f5f5f5, #fafafa)'
+            ];
+            
+            const randomBg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
+            document.body.style.background = randomBg;
+            document.body.style.backgroundSize = '40px 40px';
+            document.body.style.backgroundPosition = '0 0, 20px 20px';
+        }
+        
+        setRandomBackground();
     </script>
 </body>
 </html>
