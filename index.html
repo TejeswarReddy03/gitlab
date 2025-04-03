@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in · GitLab</title>
+    <style>
+        :root {
+            --gitlab-purple: #6e49cb;
+            --gitlab-text: #2e2e2e;
+            --border-color: #e5e5e5;
+            --box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+            --input-border: #ddd;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: #f5f5f5;
+            color: var(--gitlab-text);
+            line-height: 1.5;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .content-wrapper {
+            max-width: 1140px;
+            margin: 0 auto;
+        }
+
+        /* BITB Popup Styles */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .bitb-popup {
+            width: 480px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            z-index: 1000;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .bitb-header {
+            display: flex;
+            align-items: center;
+            background: #f1f1f1;
+            height: 40px;
+            padding: 0 16px;
+            user-select: none;
+            cursor: grab;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .bitb-header:active {
+            cursor: grabbing;
+        }
+
+        .bitb-header-text {
+            flex-grow: 1;
+            font-size: 14px;
+            color: #444;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .bitb-header-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .bitb-action {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .bitb-content {
+            padding: 32px;
+        }
+
+        /* GitLab Specific Styles */
+        .gitlab-container {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .gitlab-logo {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .gitlab-logo img {
+            width: 65px;
+            height: auto;
+        }
+
+        .gitlab-form-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 32px;
+        }
+
+        .form-title {
+            font-size: 24px;
+            margin-bottom: 24px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--input-border);
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--gitlab-purple);
+            box-shadow: 0 0 0 2px rgba(110, 73, 203, 0.2);
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .remember-me input {
+            margin-right: 8px;
+        }
+
+        .sign-in-button {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--gitlab-purple);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 16px;
+        }
+
+        .sign-in-button:hover {
+            background-color: #5a3dad;
+        }
+
+        .alternative-actions {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+        }
+
+        .alternative-link {
+            color: var(--gitlab-purple);
+            text-decoration: none;
+        }
+
+        .alternative-link:hover {
+            text-decoration: underline;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 24px 0;
+            color: #777;
+            font-size: 14px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .divider::before {
+            margin-right: 12px;
+        }
+
+        .divider::after {
+            margin-left: 12px;
+        }
+
+        .social-login {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .social-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            gap: 8px;
+        }
+
+        .social-button:hover {
+            background-color: #f8f8f8;
+        }
+
+        .social-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Dialog Box */
+        .dialog {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: var(--box-shadow);
+            z-index: 1001;
+            max-width: 400px;
+            display: none;
+        }
+
+        .dialog-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .dialog-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .dialog-content {
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .dialog-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .dialog-button {
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper" onclick="showVerificationPopup()">
+        <h1>Simulated GitLab Homepage</h1>
+        <p>This is a simulated content area. Click anywhere to trigger the GitLab login popup.</p>
+    </div>
+
+    <!-- BITB Overlay -->
+    <div id="overlay" class="overlay"></div>
+
+    <!-- BITB Popup -->
+    <div id="bitb-popup" class="bitb-popup">
+        <div class="bitb-header" id="bitb-header">
+            <div class="bitb-header-text">
+                <span>🔒</span> gitlab.com
+            </div>
+            <div class="bitb-header-actions">
+                <div class="bitb-action" style="background-color: #ffbd44;"></div>
+                <div class="bitb-action" style="background-color: #00ca4e;" onclick="closeBITB()"></div>
+            </div>
+        </div>
+        <div class="bitb-content">
+            <div class="gitlab-container">
+                <div class="gitlab-logo">
+                    <svg width="65" height="65" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M456.782 261.465L452.447 249.672L419.196 158.15C417.682 153.568 413.365 150.559 408.642 150.559C403.902 150.559 399.587 153.568 398.089 158.15L364.835 249.672H147.199L113.956 158.15C112.441 153.568 108.126 150.559 103.402 150.559C98.6615 150.559 94.3469 153.568 92.8493 158.15L59.5953 249.672L55.2457 261.465C48.6923 279.435 52.7668 299.749 65.8468 312.829L241.668 488.664C246.299 493.295 251.799 493.699 256.012 493.699C260.226 493.699 265.728 493.298 270.359 488.664L446.177 312.829C459.241 299.749 463.335 279.435 456.782 261.465Z" fill="#E24329"/>
+                        <path d="M456.782 261.465L452.447 249.672H364.835L408.642 150.559C413.365 150.559 417.682 153.568 419.196 158.15L452.447 249.672L456.782 261.465C463.335 279.435 459.241 299.749 446.177 312.829L270.359 488.664C265.728 493.298 260.226 493.699 256.012 493.699V493.699L446.177 312.829C459.241 299.749 463.335 279.435 456.782 261.465Z" fill="#FC6D26"/>
+                        <path d="M270.359 488.664L256.012 493.699V493.699L241.668 488.664L65.8469 312.829C52.7669 299.749 48.6925 279.435 55.2458 261.465L59.5954 249.672H147.199L113.956 158.15C108.126 153.568 103.402 150.559 103.402 150.559L186.136 312.829L270.359 488.664Z" fill="#FCA326"/>
+                        <path opacity="0.65" d="M103.402 150.559C108.126 150.559 112.441 153.568 113.956 158.15L147.199 249.672H59.5954L103.402 150.559Z" fill="#FC6D26"/>
+                        <path opacity="0.65" d="M408.642 150.559C403.902 150.559 399.587 153.568 398.089 158.15L364.835 249.672H452.447L408.642 150.559Z" fill="#FC6D26"/>
+                        <path d="M325.454 312.829L270.359 488.664C265.728 493.298 260.226 493.699 256.012 493.699V493.699L325.454 312.829Z" fill="#FC6D26"/>
+                        <path d="M186.136 312.829L241.668 488.664C246.299 493.295 251.799 493.699 256.012 493.699V493.699L186.136 312.829Z" fill="#FC6D26"/>
+                    </svg>
+                </div>
+                <div class="gitlab-form-container">
+                    <h2 class="form-title">Sign in</h2>
+                    <form>
+                        <div class="form-group">
+                            <label for="username" class="form-label">Username or email</label>
+                            <input type="text" id="username" class="form-input" autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" id="password" class="form-input" autocomplete="off">
+                        </div>
+                        <div class="remember-me">
+                            <input type="checkbox" id="remember-me">
+                            <label for="remember-me">Remember me</label>
+                        </div>
+                        <button class="sign-in-button" onclick="simulateLogin(event)">Sign in</button>
+                        <div class="alternative-actions">
+                            <a href="#" class="alternative-link">Forgot your password?</a>
+                            <a href="#" class="alternative-link">Register now</a>
+                        </div>
+                    </form>
+                </div>
+                <div class="divider">or</div>
+                <div class="social-login">
+                    <button class="social-button">
+                        <svg class="social-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                            <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+                            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+                        </svg>
+                        <span>Sign in with Google</span>
+                    </button>
+                    <button class="social-button">
+                        <svg class="social-icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#1877F2" d="M512 84c234.75 0 428 193.24 428 428 0 214.76-159.46 393.05-366.98 421.98V644.9h99.22L687.65 512h-114.63v-85.37c0-36.37 15.7-71.8 66.12-71.8h51.14v-112.7s-46.46-7.93-90.9-7.93c-92.76 0-153.39 56.2-153.39 157.97V512h-103.12v132.9h103.12v289.08C243.45 905.06 84 726.76 84 512 84 277.24 277.25 84 512 84z"/>
+                        </svg>
+                        <span>Sign in with Facebook</span>
+                    </button>
+                    <button class="social-button">
+                        <svg class="social-icon" viewBox="0 0 98 96" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#24292f" d="M48.85 0C21.84 0 0 22 0 49.22 0 70.99 14.1 89.34 33.56 95.84c2.4.47 3.3-1.06 3.3-2.32 0-1.16-.07-5.02-.07-9.1-13.66 2.93-16.53-5.86-16.53-5.86-2.24-5.72-5.47-7.22-5.47-7.22-4.45-3.08.33-3.01.33-3.01 4.93.35 7.52 5.09 7.52 5.09 4.36 7.52 11.44 5.36 14.25 4.1.41-3.17 1.7-5.36 3.1-6.57-10.93-1.25-22.39-5.49-22.39-24.28 0-5.37 1.9-9.76 5.02-13.2-.5-1.24-2.17-6.28.47-13.08 0 0 4.1-1.33 13.41 5.05 3.99-1.08 8.13-1.63 12.3-1.63 4.14 0 8.35.55 12.3 1.63 9.28-6.38 13.38-5.05 13.38-5.05 2.65 6.8.98 11.84.47 13.08 3.12 3.44 5.02 7.83 5.02 13.2 0 18.86-11.48 23-22.46 24.21 1.75 1.52 3.31 4.47 3.31 9.03 0 6.57-.06 11.83-.06 13.47 0 1.29.89 2.82 3.3 2.34 19.47-6.48 33.53-24.83 33.53-46.62C97.72 22 75.85 0 48.85 0z"/>
+                        </svg>
+                        <span>Sign in with GitHub</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dialog Box -->
+    <div id="security-dialog" class="dialog">
+        <div class="dialog-header">
+            <span style="color: #4caf50; font-size: 20px;">✅</span>
+            <h3 class="dialog-title">Sign-in Successful</h3>
+        </div>
+        <div class="dialog-content">
+            <p>You have successfully signed in to your GitLab account.</p>
+            <p style="margin-top: 10px;">Redirecting you to your projects dashboard...</p>
+        </div>
+        <div class="dialog-buttons">
+            <button class="dialog-button" style="background-color: #eeeeee;" onclick="closeDialog()">Cancel</button>
+            <button class="dialog-button" style="background-color: var(--gitlab-purple); color: white;" onclick="continueToWebsite()">Continue</button>
+        </div>
+    </div>
+
+    <script>
+        // Initially show the popup when the page loads
+        window.onload = function() {
+            showVerificationPopup();
+        };
+
+        // Show the BITB popup
+        function showVerificationPopup() {
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('bitb-popup').style.display = 'block';
+            makeDraggable(document.getElementById('bitb-popup'), document.getElementById('bitb-header'));
+        }
+
+        // Close the BITB popup
+        function closeBITB() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('bitb-popup').style.display = 'none';
+        }
+
+        // Show success dialog
+        function showSecurityDialog() {
+            document.getElementById('security-dialog').style.display = 'block';
+        }
+
+        // Close dialog
+        function closeDialog() {
+            document.getElementById('security-dialog').style.display = 'none';
+        }
+
+        // Continue to website
+        function continueToWebsite() {
+            document.getElementById('security-dialog').style.display = 'none';
+        }
+
+        // Simulate login
+        function simulateLogin(event) {
+            if (event) {
+                event.preventDefault();
+            }
+            
+            // Get the values (for demonstration - in a real attack, these would be sent to the attacker)
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            console.log("Captured credentials (demo only):", {username, password});
+            
+            // Display a brief "signing in" message
+            const button = document.querySelector('.sign-in-button');
+            const originalText = button.textContent;
+            button.textContent = 'Signing in...';
+            button.disabled = true;
+            
+            // After a short delay, close the BITB popup and show the success dialog
+            setTimeout(() => {
+                closeBITB();
+                showSecurityDialog();
+                button.textContent = originalText;
+                button.disabled = false;
+            }, 1500);
+        }
+
+        // Make the popup draggable
+        function makeDraggable(popup, header) {
+            let offsetX = 0, offsetY = 0, isDragging = false;
+
+            header.onmousedown = (e) => {
+                isDragging = true;
+                offsetX = e.clientX - popup.getBoundingClientRect().left;
+                offsetY = e.clientY - popup.getBoundingClientRect().top;
+                popup.style.transition = 'none';
+                
+                // Remove transform to allow proper positioning
+                popup.style.transform = 'none';
+                
+                // Update initial position
+                popup.style.left = `${popup.getBoundingClientRect().left}px`;
+                popup.style.top = `${popup.getBoundingClientRect().top}px`;
+                
+                document.onmousemove = drag;
+                document.onmouseup = stopDrag;
+            };
+
+            function drag(e) {
+                if (!isDragging) return;
+                popup.style.left = `${e.clientX - offsetX}px`;
+                popup.style.top = `${e.clientY - offsetY}px`;
+            }
+
+            function stopDrag() {
+                isDragging = false;
+                document.onmousemove = null;
+                document.onmouseup = null;
+            }
+        }
+    </script>
+</body>
+</html>
